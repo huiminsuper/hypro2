@@ -1,0 +1,16 @@
+<Workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" encoding="GB2312">
+	<Nodes title="">
+		<Node>
+			<NodeId ID="5">node_20181102</NodeId>
+			<NodeType>Task</NodeType>
+			<KeyName>cfo_sca_l1a_pro</KeyName>
+			<localName>CFOSAT开心撒打算</localName>
+		</Node>
+	</Nodes>
+	<Dependencies>
+		<Dependency>
+			<From>node_20181102</From>
+			<To>node_20181102_20181105</To>
+		</Dependency>
+	</Dependencies>
+</Workflow>
