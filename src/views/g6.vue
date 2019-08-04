@@ -199,6 +199,7 @@
 					    { id: '5-6', source: '5', target: '6' ,shape: 'arrow_circle', type: 'solidArrow' },
 					]
 				  };
+				//   提交一个 vue pro
 				  data.nodes.forEach((item, index) => {
 					  item.shape = this.cssArr[index%this.cssArr.length]
 				  });
