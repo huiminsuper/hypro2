@@ -25,10 +25,10 @@
 				<input type="text" value="123" v-model="mark" placeholder="输入流程标识" />
 				<input type="text" value="" v-model="name" placeholder="输入流程名称" />
 				<h5>插件</h5>
-				<p @click="create(item, 'rect')" v-for="(item, index) in list" style="cursor: pointer;" >{{item}}</p>
+				<p @click="create(item, 'rect')" v-for="(item, index) in list" :key="index" style="cursor: pointer;" >{{item}}</p>
 				<h5>流程</h5>
 				<!-- <p @click="create(item, 'rhombus')" v-for="(item, index) in list2" style="cursor: pointer;">{{item}}</p> -->
-				<p @click="create(item, 'rect')" v-for="(item, index) in list2" style="cursor: pointer;" >{{item}}</p>
+				<p @click="create(item, 'rect')" v-for="(item, index) in list2" :key="index" style="cursor: pointer;" >{{item}}</p>
 				<ul class="itempanel">
 				  <li class="getItem" data-shape="PS-SMART" data-type="node" data-size="170*34">
 				    <span class="panel-type-icon"></span>PS-SMART 分类

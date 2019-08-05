@@ -1,9 +1,9 @@
 import HelloWorld from '@/views/HelloWorld'
 import Tdp from '@/views/tdplan/Tdp'
-//import Sub from '@/views/subplan/Sub'
+// import Sub from '@/views/subplan/Sub'
 import Pro from '@/views/proplan/Pro'
-//import Linksub from '@/views/linksub/Linksub'
-//import Linkpro from '@/views/linkpro/Linkpro'
+// import Linksub from '@/views/linksub/Linksub'
+// import Linkpro from '@/views/linkpro/Linkpro'
 import Home from '@/Home'
 import SelectChose from '@/views/SelectChose'
 import Drplan from '@/views/drplan/Drplan'
@@ -86,23 +86,26 @@ let routes = [
 				]
 			},
 			{ path: '/SelectChose', name: 'SelectChose', tabName: 'SelectChose', component: SelectChose },
-			{ path: '/Test', name: 'Test Vuex', tabName: 'Test Vuex', component: Test },
-            { path: '/Flowchart', name: 'Flowchart', tabName: '流程视图', component: Flowchart },
-            { path: '/Line', name: 'line', tabName: 'lineChart', component: Line },
-            { path: '/car', name: 'car', tabName: 'Shop Car', component: Car },
-            { path: '/promise', name: 'promise', tabName: 'Promise', component: Promise },
-			{ path: '/promiseDemo', name: 'proDemo', tabName: 'PromiseDemo', component: ProDemo },
-            { path: '/xmlToJson', name: 'xmlToJson', tabName: 'xmlToJson', component: XmlToJson },
-            { path: '/mysql', name: 'mysql', tabName: 'mysql', component: Mysql },
-            { 
-				path: '/layout', name: 'layout', tabName: '监控', component: Layout ,
-				path: '/readOnlyG6', name: 'readOnlyG6', tabName: 'readOnlyG6', component: OnlyReadG6 ,
+			// { path: '/Test', name: 'Test Vuex', tabName: 'Test Vuex', component: Test },
+			{ path: '/Flowchart', name: 'Flowchart', tabName: '流程视图', component: Flowchart },
+			{ path: '/Line', name: 'line', tabName: 'lineChart', component: Line },
+			{ path: '/car', name: 'car', tabName: 'Shop Car', component: Car },
+			{ path: '/promise', name: 'promise', tabName: 'Promise', component: Promise },
+				{ path: '/promiseDemo', name: 'proDemo', tabName: 'PromiseDemo', component: ProDemo },
+			{ path: '/xmlToJson', name: 'xmlToJson', tabName: 'xmlToJson', component: XmlToJson },
+			{ path: '/mysql', name: 'mysql', tabName: 'mysql', component: Mysql },
+			{ 
+				path: '/layout', 
+				name: 'layout', 
+				tabName: '监控', 
+				component: Layout,
 				redirect: '/layout/monitor',
 				children: [
 					{ path: '/layout/monitor', name: 'monitor', subName: '状态和曲线', component: Monitor },
 					{ path: '/layout/node', name: 'node', subName: '查看节点', component: Node }
 				]
-			}
+			},
+			{path: '/readOnlyG6', name: 'readOnlyG6', tabName: 'readOnlyG6', component: OnlyReadG6}
 			/* { path: '/vTable', name: 'vTable', tabName: 'vTable', component: vTable } */
 			
 			/* ,

@@ -27,7 +27,7 @@
 			</el-form>
 		</el-col>
 		<el-col :span="24">
-			<p>{{str}}</p>
+			<!-- <p>{{str}}</p> -->
 			<!-- <Index @saveData="saveDataFn">saveDataFn</Index> -->
 		</el-col>
 		<el-table :data="useData" v-loading="listLoading">
