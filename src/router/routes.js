@@ -27,6 +27,7 @@ import Monitor from '@/views/self/monitor'
 import Node from '@/views/self/node'
 import g6 from '@/views/g6'
 import OnlyReadG6 from '@/views/onlyReadG6'
+import Cesium from '@/views/map/cesium'
 
 let routes = [
 	/* {
@@ -105,7 +106,8 @@ let routes = [
 					{ path: '/layout/node', name: 'node', subName: '查看节点', component: Node }
 				]
 			},
-			{path: '/readOnlyG6', name: 'readOnlyG6', tabName: 'readOnlyG6', component: OnlyReadG6}
+			{path: '/readOnlyG6', name: 'readOnlyG6', tabName: 'readOnlyG6', component: OnlyReadG6},
+			{path: '/cesium', name: 'cesium', tabName: 'cesium', component: Cesium}
 			/* { path: '/vTable', name: 'vTable', tabName: 'vTable', component: vTable } */
 			
 			/* ,

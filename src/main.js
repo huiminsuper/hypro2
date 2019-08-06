@@ -9,14 +9,19 @@ import routes from './router/routes'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import layer from 'vue-layer'
-import './api/directives.js';
+import './api/directives.js'
+
+import Cesium from 'cesium/Cesium'
+import widgets from 'cesium/Widgets/widgets.css'
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
 Vue.use(Vuex)
 
 Vue.config.productionTip = false
-Vue.prototype.$layer = layer(Vue);
+Vue.prototype.$layer = layer(Vue)
+Vue.prototype.Cesium = Cesium
+Vue.prototype.widgets = widgets 
 
 const router = new VueRouter({
 	// mode: 'history',

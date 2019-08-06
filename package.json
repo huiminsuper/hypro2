@@ -13,6 +13,7 @@
   "dependencies": {
     "@antv/g6-editor": "^1.2.0",
     "axios": "^0.18.0",
+    "cesium": "^1.60.0",
     "chend-xml2json": "^1.0.5",
     "css-loader": "^0.28.11",
     "echarts": "^4.2.0-rc.1",
