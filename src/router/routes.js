@@ -29,6 +29,8 @@ import g6 from '@/views/g6'
 import OnlyReadG6 from '@/views/onlyReadG6'
 import Cesium from '@/views/map/cesium'
 
+import UploadDownload from '@/views/handles/uploadDownload'
+
 let routes = [
 	/* {
 		path: '/',
@@ -120,6 +122,11 @@ let routes = [
 		path: '/',
 		name: 'g6',
 		component: g6
+	},
+	{
+		path: '/uploadDownload',
+		name: 'uploadDownload',
+		component: UploadDownload
 	}
 ]
 

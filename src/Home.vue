@@ -6,10 +6,17 @@
 			</template>
 		</el-menu> -->
 		<el-menu mode="horizontal" :default-active="$route.path" router>
-			<template v-for="(item, index) in $router.options.routes[0].children">
-				<el-menu-item :index="item.path" :key="index" @click="handleSelect">{{item.tabName}}</el-menu-item>
-			</template>
+			<el-submenu index="1">
+				<template slot="title">我的工作台</template>
+				<template v-for="(item, index) in $router.options.routes[0].children">
+					<el-menu-item :index="item.path" :key="index" @click="handleSelect">{{item.tabName}}</el-menu-item>
+				</template>
+			</el-submenu>
+			<el-menu-item index="/uploadDownload">处理中心</el-menu-item>
 		</el-menu>
+		
+		
+		
 		<transition name="fade-transform" mode="out-in">
 			<router-view></router-view>
 		</transition>
