@@ -59,7 +59,8 @@ export default {
                         {"name":"日本", "value":20000, "identify": "Riben", "COLOR": "RED","coordinates":[0, -40]},
                         // {"name":"北京D", "value":40,"coordinates":[116.259491, 39.593590]},
                         // {"name":"北京E", "value":10,"coordinates":[117.264262, 40.184631]}
-                  ]
+                  ],
+                  waveBaseNumer: 8000
 
             }
       },
@@ -206,7 +207,7 @@ export default {
                   this.waterWave.forEach(val => {
                         this.addCircleRipple({
                               json:val,
-                              deviationR:4000,//差值 差值也大 速度越快
+                              deviationR: 5500,//差值 差值也大 速度越快
                               eachInterval:1700,//两个圈的时间间隔
                               // imageUrl:"assets/home/redCircle2.png",
                               //imageUrl: '../../assets/images/logo.png',
@@ -341,19 +342,15 @@ export default {
             },
             // *******添加水波纹 start**************************************
             addCircleRipple(data){
-                  var r1=9000,r2=9000; var r3=9000,r4=9000;
-                  function changeR1() { //这是callback，参数不能内传
+                  var r1=this.waveBaseNumer,r2=this.waveBaseNumer; var r3=this.waveBaseNumer,r4=this.waveBaseNumer;
+                  let changeR1 = () => { //这是callback，参数不能内传
                         r1=r1+data.deviationR;
-                        if(r1>=data.maxR){
-                              r1=9000;
-                        }
+                        if(r1>=data.maxR){ r1=this.waveBaseNumer; }
                         return r1;
                   }
-                  function changeR2() {
+                  let changeR2 = () => {
                         r2=r2+data.deviationR;
-                        if(r2>=data.maxR){
-                              r2=9000;
-                        }
+                        if(r2>=data.maxR){ r2=this.waveBaseNumer; }
                         return r2;
                   }
                   //第一个圆先跑
@@ -381,18 +378,14 @@ export default {
                   });
                   //第二个圆开始跑
                   setTimeout(() => {
-                        function changeR11() { //这是callback，参数不能内传
+                        let changeR11 = () => { //这是callback，参数不能内传
                               r3=r3+data.deviationR;
-                              if(r3>=data.maxR){
-                              r3=9000;
-                              }
+                              if(r3>=data.maxR){ r3=this.waveBaseNumer; }
                               return r3;
                         }
-                        function changeR12() {
+                        let changeR12 = () => {
                               r4=r4+data.deviationR;
-                              if(r4>=data.maxR){
-                              r4=9000;
-                              }
+                              if(r4>=data.maxR){ r4=this.waveBaseNumer; }
                               return r4;
                         }
                         this.viewer.entities.add({
