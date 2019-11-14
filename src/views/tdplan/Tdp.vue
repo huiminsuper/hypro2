@@ -20,7 +20,7 @@
 				</el-form-item>
 				<!-- 时间选择 -->
 				<el-form-item label="时间范围:" prop="timeRange">
-					<el-date-picker v-model="argForm.timeRange" type="datetimerange" :clearable="false" :picker-options="pickerOptions" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="handleTimeChanged">
+					<el-date-picker v-model="argForm.timeRange" :default-time="['00:00:00','23:59:59']" type="datetimerange" :clearable="false" :picker-options="pickerOptions" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="handleTimeChanged">
 					</el-date-picker>
 				</el-form-item>
 				<el-button @click="toG6One">to g6 one</el-button>
@@ -66,8 +66,8 @@
 				listLoading: false,
 				argForm: {
 					satelliteId: '选择卫星',
-					orbitId: ''
-					// timeRange: [this.$mount().add('-7', 'days'), this.$mount().add('7', 'days')]
+					orbitId: '',
+					timeRange: [this.$moment().add('-6', 'days').format("YYYY-MM-DD 00:00:00"), this.$moment().format("YYYY-MM-DD 23:59:59")]
 				},
 				rules: {
 					orbitId: [
@@ -75,6 +75,22 @@
 					]
 				},
 				pickerOptions: {
+					onPick: ({ maxDate, minDate }) => {
+						console.log(maxDate)
+						console.log(minDate)
+						this.choiceDate = minDate.getTime()
+						if (maxDate) {
+							this.choiceDate = ''
+						}
+					},
+					disabledDate: (time) => {
+						if (this.choiceDate) {
+							const one = 7 * 24 * 3600 * 1000
+							const minTime = this.choiceDate - one;//前7天
+							const maxTime = this.choiceDate + one;//后7天
+							return time.getTime() < minTime || time.getTime() > maxTime
+						}
+					},
 					shortcuts: [
 						{
 							text: '未来一天',
@@ -156,7 +172,7 @@
 			// this.(),
 			this.get();
 			this.getAxiosData();
-			this.getNewData();
+			// this.getNewData();
 			this.str = 'a,jsdkljdkladkls\n阿里空间都是垃圾袋';
 			
 			let arr = this.str.split('\n');
@@ -166,7 +182,8 @@
 			console.log('arr[1]: ', arr[1]);
 		},
 		beforeDestory() {
-			clearInterval(this.timer)
+			clearInterval(this.timer);
+			clearInterval(this.timer2)
 		},
 		methods: {
 			saveDataFn(data){
@@ -304,9 +321,9 @@
 			},
 			getAxiosData () {
 				this.listLoading = true
-				setTimeout(() => {
-					this.listLoading = false;
-					for(let i = 0; i < 100; i++) {
+				this.timer2 = setTimeout(() => {
+					this.listLoading = false; 
+					for(let i = 0; i < 5; i++) {
 						this.sourcesData.push({
 							dtPlanID: '000009592, ' + i,
 							satelliteID: 'H1C',
@@ -324,8 +341,8 @@
 				}, 500)
 			},
 			getNewData () {
-				this.timer = setInterval(() => {
-					for(let i = 0; i < 99; i++) {
+				this.timer = setTimeout(() => {
+					for(let i = 0; i < 5; i++) {
 						this.newDATA.push({
 							dtPlanID: '000009592, ' + i,
 							satelliteID: 'H1C',

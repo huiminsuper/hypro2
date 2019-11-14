@@ -12,23 +12,27 @@
                               stationData: [
                                     { name: '牡丹江', label: 'MDJ', lon: 0.0, lat: 0.0,bgColor: 'PURPLE' },
                                     { name: '陵水', label: 'LS', lon: 20.0, lat: 20.0, bgColor: 'BLUE' }
-                              ]
+                              ],
+                              timer: null
                             }
                     },
                    mounted(){
                        this.initView();
                        //this.initView2();
                   },
+                  beforeDestroy() {
+                        clearInterval(this.timer);
+                  },
                   methods: {
                         initView2(){
                               var viewer = new Cesium.Viewer('cesiumContainer', {
                                     //2.æœ¬åœ°å›¾ç‰‡
-                                    // imageryProvider: new Cesium.SingleTileImageryProvider({
-                                    // url: '../img/worldimage.jpg'
-                                    // }),
+                                    imageryProvider: new Cesium.SingleTileImageryProvider({
+                                          url: '../img/worldimage.jpg'
+                                    }),
                                     baseLayerPicker: false,
                               });
-
+                              console.log('viewer1111111111111 :', viewer);
                               var czml = [{
                                     "id": "document",
                                     "name": "polygon",
@@ -103,6 +107,7 @@
                               var dataSourcePromise;
                               var i = 30.957024;
                               var a = 60;
+                              console.log('viewer1111111111111 :', viewer);
                               setInterval(function() {
                                     i += 0.0001;
                                     a += 10;
@@ -126,38 +131,39 @@
                                     scene3DOnly: false, //每个几何实例将只能以3D渲染以节省GPU内存 
                                     terrainProvider : Cesium.createWorldTerrain(),
                                     baseLayerPicker : false,
-                                    shouldAnimate : true
+                                    shouldAnimate : true,
                                    
                                     //加载在线谷歌地图
-                        //             imageryProvider: new Cesium.UrlTemplateImageryProvider({
-                        //                   //url:"http://www.google.cn/maps/vt?lyrs=s&x={x}&y={y}&z={z}"
-                        //                   url: "../static/world.bmp"
-                        //             })
+                                    imageryProvider: new Cesium.UrlTemplateImageryProvider({
+                                          //url:"http://www.google.cn/maps/vt?lyrs=s&x={x}&y={y}&z={z}"
+                                          url: "../static/world.bmp"
+                                    })
                               });// viewer ending
                               //viewer.scene.debugShowFramesPerSecond = true; // 显示侦速
                               
                              viewer.scene.globe.enableLighting = true;
 
                               
-                              let promise = viewer.dataSources.add(Cesium.CzmlDataSource.load('../static/xl.czml'));
+                              // let promise = viewer.dataSources.add(Cesium.CzmlDataSource.load('../static/xl.czml'));
                               
-                              promise.then(dataSource => {
-                                   let entities =  dataSource.entities.values;
-                                    console.log(entities[1])
-                                    var i = 30.957024;
-                                    var a = 60;
-                                    setInterval(function() {
-                                          i += 0.0001;
-                                          a += 10;
-                                          //entities[1].position.cartesian.push(a, 118.8747338, i, 0);
-                                          entities[0].clock.currentTime = viewer.clock.currentTime.toString();
-                                          viewer.entities.removeAll();
-                                          viewer.dataSources.add(Cesium.CzmlDataSource.load('../static/xl.czml'));
-                                    }, 10000);
+                              // promise.then(dataSource => {
+                              //      let entities =  dataSource.entities.values;
+                              //       console.log('123123123',entities)
+                              //       var i = 30.957024;
+                              //       var a = 60;
+                              //       this.timer = setInterval(function() {
+                              //             i += 0.0001;
+                              //             a += 10;
+                              //             console.log('123')
+                              //             // entities[1].position.cartesian.push(a, 118.8747338, i, 0);
+                              //            entities[0].clock.currentTime = viewer.clock.currentTime.toString();
+                              //             viewer.entities.removeAll();
+                              //             viewer.dataSources.add(Cesium.CzmlDataSource.load('../static/xl.czml'));
+                              //       }, 10000);
 
-                              });
+                              // });
                              
-                               viewer.zoomTo(promise);
+                              //  viewer.zoomTo(promise);
                               
                               // ======================
 

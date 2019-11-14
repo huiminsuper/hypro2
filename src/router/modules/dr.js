@@ -21,7 +21,8 @@ const drRouter = {
 								name: 'SubDrplan', 
 								component: drHome,
 								redirect: '/Drplan/subDrplan',
-								meta: { title: 'SubDrplan' }/* ,
+								meta: { title: 'SubDrplan' }
+								/* 
 								children: [
 									{ 
 										path: 'subDrplan', 
@@ -52,7 +53,7 @@ const drRouter = {
 											}
 										]
 									} 
-								]*/
+								] **/
 							}
 						]
 					}

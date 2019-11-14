@@ -53,7 +53,8 @@ export default {
       methods: {
             handleSubmit(index, item) {
                   // 每次dom更新提交一次，批量提交
-                  
+                  console.log(`this is ${index}`);
+                  console.log('index :', index);
                   
                   this.$nextTick(_=>{
                         console.log('aa',this.$refs);
