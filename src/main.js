@@ -11,17 +11,21 @@ import 'element-ui/lib/theme-chalk/index.css'
 import layer from 'vue-layer'
 import './api/directives.js'
 
-import Cesium from 'cesium/Cesium'
-import widgets from 'cesium/Widgets/widgets.css'
+// import Cesium from 'cesium/Cesium' // *****cesium*****
+// import widgets from 'cesium/Widgets/widgets.css' // *****cesium*****
+
+import moment from 'moment'
+import VueMomentJS from 'vue-momentjs'
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
 Vue.use(Vuex)
+Vue.use(VueMomentJS, moment)
 
 Vue.config.productionTip = false
 Vue.prototype.$layer = layer(Vue)
-Vue.prototype.Cesium = Cesium
-Vue.prototype.widgets = widgets 
+// Vue.prototype.Cesium = Cesium // *****cesium*****
+// Vue.prototype.widgets = widgets // *****cesium*****
 
 const router = new VueRouter({
 	// mode: 'history',
@@ -32,7 +36,7 @@ let routeList = []
 router.beforeEach((to, from, next) => {
 	let index = -1
 	for (let i = 0; i < routeList.length; i++) {
-		if (routeList[i].name === to.name) {  // 如果下一个路由数组中存在，记录index
+		if (routeList[i].name === to.name) { // 如果下一个路由数组中存在，记录index
 			index = i
 			break
 		}

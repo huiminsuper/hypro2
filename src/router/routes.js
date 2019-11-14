@@ -30,18 +30,9 @@ import OnlyReadG6 from '@/views/onlyReadG6'
 import Cesium from '@/views/map/cesium'
 
 import UploadDownload from '@/views/handles/uploadDownload'
+import Earth from '@/views/map/earth'
 
 let routes = [
-	/* {
-		path: '/',
-		component: Home,
-		children: [
-			{
-				path: '/',
-				component: Tdp
-			}
-		]
-	}, */
 	{
 		path: '/',
 		name: '',
@@ -56,45 +47,19 @@ let routes = [
 				component: drHome,
 				redirect: '/Drplan',
 				children: [
-					{ 
-						path: '/Drplan', 
-						component: Drplan,
-						name: 'Drplan'/* ,
-						meta: { title: 'Drplan' } */
-					},
-					{
-						path: '/subDrplan/:drplanId', 
-						name: 'SubDrplan',
-						component: SubDrplan,
-						meta: { title: 'SubDrplan' }
-					},
-					{
-						path: '/Sub2', 
-						name: 'Sub2', 
-						component: Sub2,
-						meta: { title: 'Sub2' }
-					},
-					{
-						path: '/Sub3', 
-						name: 'Sub3', 
-						component: Sub3,
-						meta: { title: 'Sub3' }
-					},
-					{
-						path: '/Sub4', 
-						name: 'Sub4', 
-						component: Sub4,
-						meta: { title: 'Sub4' }
-					}
+					{ path: '/Drplan', component: Drplan, name: 'Drplan' },
+					{ path: '/subDrplan/:drplanId', name: 'SubDrplan', component: SubDrplan, meta: { title: 'SubDrplan' } },
+					{ path: '/Sub2', name: 'Sub2', component: Sub2, meta: { title: 'Sub2' } },
+					{ path: '/Sub3', name: 'Sub3', component: Sub3, meta: { title: 'Sub3' } },
+					{ path: '/Sub4', name: 'Sub4', component: Sub4, meta: { title: 'Sub4' } }
 				]
 			},
 			{ path: '/SelectChose', name: 'SelectChose', tabName: 'SelectChose', component: SelectChose },
-			// { path: '/Test', name: 'Test Vuex', tabName: 'Test Vuex', component: Test },
 			{ path: '/Flowchart', name: 'Flowchart', tabName: '流程视图', component: Flowchart },
 			{ path: '/Line', name: 'line', tabName: 'lineChart', component: Line },
 			{ path: '/car', name: 'car', tabName: 'Shop Car', component: Car },
 			{ path: '/promise', name: 'promise', tabName: 'Promise', component: Promise },
-				{ path: '/promiseDemo', name: 'proDemo', tabName: 'PromiseDemo', component: ProDemo },
+			{ path: '/promiseDemo', name: 'proDemo', tabName: 'PromiseDemo', component: ProDemo },
 			{ path: '/xmlToJson', name: 'xmlToJson', tabName: 'xmlToJson', component: XmlToJson },
 			{ path: '/mysql', name: 'mysql', tabName: 'mysql', component: Mysql },
 			{ 
@@ -110,24 +75,11 @@ let routes = [
 			},
 			{path: '/readOnlyG6', name: 'readOnlyG6', tabName: 'readOnlyG6', component: OnlyReadG6},
 			{path: '/cesium', name: 'cesium', tabName: 'cesium', component: Cesium}
-			/* { path: '/vTable', name: 'vTable', tabName: 'vTable', component: vTable } */
-			
-			/* ,
-			{ path: 'Linksub', name: 'Linksub', component: Linksub },
-			{ path: 'Linkpro', name: 'Linkpro', component: Linkpro },
-			{ path: 'Sub', name: 'Sub', component: Sub } */
 		]
 	},
-	{
-		path: '/',
-		name: 'g6',
-		component: g6
-	},
-	{
-		path: '/uploadDownload',
-		name: 'uploadDownload',
-		component: UploadDownload
-	}
+	{ path: '/', name: 'g6', component: g6 },
+	{ path: '/uploadDownload', name: 'uploadDownload', component: UploadDownload },
+	{ path: '/earth', name: 'earth', component: Earth }
 ]
 
 export default routes

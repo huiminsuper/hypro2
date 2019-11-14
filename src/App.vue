@@ -82,12 +82,5 @@ body {
 		font-weight: 400;
 	}
 	
-	.el-dialog {
-		    /* left: 50%;
-			margin-left: -190px;
-			top: 50%;
-			margin-top: -101px;
-			margin-bottom: initial;
-			margin-right: initial; */
-	}
+	.cesium-widget-credits {display: none!important;}
 </style>

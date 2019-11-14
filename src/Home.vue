@@ -13,6 +13,7 @@
 				</template>
 			</el-submenu>
 			<el-menu-item index="/uploadDownload">处理中心</el-menu-item>
+			<el-menu-item index="/earth">Earth</el-menu-item>
 		</el-menu>
 		
 		
@@ -36,7 +37,7 @@
 			} */
 		},
 		mounted () {
-			// console.log(this.$router.options.routes[0].children)
+			console.log(this.$router.options.routes[0].children)
 		},
 		methods: {
 			handleSelect (key, keypath) {
