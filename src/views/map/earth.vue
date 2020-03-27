@@ -9,6 +9,7 @@ export default {
       data() {
             return {
                   m: 0,
+                  viewer: null,
                   stationData: [
                         { name: '牡丹江', label: 'MDJ', lon: 0.0, lat: 0.0,bgColor: 'PURPLE', description: 'MDJ的站点信息' },
                         { name: '陵水', label: 'LS', lon: 20.0, lat: 20.0, bgColor: 'BLUE', description: 'LS的站点信息' }
@@ -25,16 +26,16 @@ export default {
                               },
                               fusheList:[{lon: 0, lat: 0, alt: 0, time: 0}]
                         }, 
-                        {
-                              name: 'Jianbing8-7', identify: 'H2B', time: '2019-02-06 00:00', check: true, image: '../../static/satellite/H1A.png',
-                              list: [{lon:0.23, lat:0.234, alt:3000000, time:0},{lon:117.034586, lat:39.881202, alt:0, time:40},{lon:116.340088, lat:38.842224, alt:70000, time:100},{lon:113.489176, lat:23.464017, alt:70000, time:280}, {lon:113.262084, lat:23.13901, alt:0, time:360}],
-                              zcList: {
-                                    Projectindex: '0002', SpyReqId: '0002', Planindex: '0002', Taskuid: '0002', Sinumber: '0002', Dcnumber: '0002',
-                                    Tstime: '0002', Tetime: '0002', Duration: '1h', Isrealtime: '0002', Ifconvert: 'true', Teltracstate: 'false',
-                                    CatalogTime: '2019-8-12 22：22：22', MsgXml: ''  
-                              },
-                              fusheList:[{lon: 0.23, lat: 0.234, alt: 0, time: 0}]
-                        }, 
+                        // {
+                        //       name: 'Jianbing8-7', identify: 'H2B', time: '2019-02-06 00:00', check: true, image: '../../static/satellite/H1A.png',
+                        //       list: [{lon:0.23, lat:0.234, alt:3000000, time:0},{lon:117.034586, lat:39.881202, alt:0, time:40},{lon:116.340088, lat:38.842224, alt:70000, time:100},{lon:113.489176, lat:23.464017, alt:70000, time:280}, {lon:113.262084, lat:23.13901, alt:0, time:360}],
+                        //       zcList: {
+                        //             Projectindex: '0002', SpyReqId: '0002', Planindex: '0002', Taskuid: '0002', Sinumber: '0002', Dcnumber: '0002',
+                        //             Tstime: '0002', Tetime: '0002', Duration: '1h', Isrealtime: '0002', Ifconvert: 'true', Teltracstate: 'false',
+                        //             CatalogTime: '2019-8-12 22：22：22', MsgXml: ''  
+                        //       },
+                        //       fusheList:[{lon: 0.23, lat: 0.234, alt: 0, time: 0}]
+                        // }, 
                         {
                               name: 'Jingbing8-8', identify: 'H2A', time: '2019-03-08 00:00', check: true, image: '../../static/satellite/H2C.png',
                               list: [{lon:100.23, lat:43.34, alt:4000000, time:0},{lon:118.438838, lat:32.03777, alt:0, time:40},{lon:117.802406, lat:31.91231, alt:70000, time:100},{lon:104.043645, lat:35.993845, alt:70000, time:280}, {lon:101.807224, lat:36.660972, alt:0, time:360}],
@@ -45,6 +46,28 @@ export default {
                               },
                               fusheList:[{lon: 100.23, lat: 43.34, alt: 0, time: 0}]
                         }
+                  ], // 卫星数据 satelliteData ending
+                  data: [
+                        {
+                              longitude: 0.23, dimension: 0.234, height: 3000000, time: 0,
+                              name: 'J888', identify: 'H2B', time: '2019-02-06 00:00', check: true, image: '../../static/satellite/H1A.png',
+                              list: [{lon:0.23, lat:0.234, alt:3000000, time:0},
+                                      {lon:117.034586, lat:39.881202, alt:0, time:40},
+                                      {lon:116.340088, lat:38.842224, alt:70000, time:100},
+                                      {lon:113.489176, lat:23.464017, alt:70000, time:280}, 
+                                      {lon:113.262084, lat:23.13901, alt:0, time:360}],
+                              zcList: {
+                                    Projectindex: '0002', SpyReqId: '0002', Planindex: '0002', Taskuid: '0002', Sinumber: '0002', Dcnumber: '0002',
+                                    Tstime: '0002', Tetime: '0002', Duration: '1h', Isrealtime: '0002', Ifconvert: 'true', Teltracstate: 'false',
+                                    CatalogTime: '2019-8-12 22：22：22', MsgXml: ''  
+                              },
+                              fusheList:[{lon: 0.23, lat: 0.234, alt: 0, time: 0}]
+                        },
+                        // { longitude: 100.23, dimension: 39.918034, height: 700000, time: 0 }, 
+                        // { longitude: 118.438838, dimension: 39.918145, height: 700000, time: 40 },
+                        // { longitude: 117.802406, dimension: 39.344641, height: 700000, time: 100 }, 
+                        // { longitude: 104.043645, dimension: 35.559967, height: 700000, time: 280 }, 
+                        // { longitude: 101.807224, dimension: 34.559967, height: 700000, time: 360 }
                   ],
                   // 放射点数据
                   radiationData: [
@@ -71,12 +94,14 @@ export default {
             self.intervial = setInterval(function(){
                   self.m +=2
                   self.getCurrentTime()
-            }, 1000)
+            }, 1000);
+            this.setCamera();
       },
       methods: {
             initView(){
                   // let  Cesium = this.Cesium;
                   let viewer = new Cesium.Viewer('cesiumContainer', {
+                        // enableLighting: true, // 无效
                         creditContainer:"cesiumContainer", // 存放图的div
                         navigationHelpButton: false,
                         requestRenderMode: true, //启用请求渲染模式
@@ -94,6 +119,8 @@ export default {
                               credit: '../../static/Textures/NaturalEarthII'
                         }),
                   });
+                  viewer.scene.globe.enableLighting = true; // 太阳光的阴影
+                  viewer.shadows = true; // 太阳光的阴影
                   this.viewer = viewer;
                   viewer.entities.add({ // 添加一个点
                         name: '指示点1',
@@ -110,7 +137,7 @@ export default {
                                     semiMajorAxis:2000000.0,
                                     material: Cesium.Color[item.bgColor].withAlpha(0.5)
                               },
-                              billboard: { image: '../../static/images/satellite.png', width: 20, height: 20 }, // 广告牌
+                              billboard: { image: '../../static/images/satellite.png', width: 20, height: 20 }, // 广告牌(此处是显示在站点上的图标)
                               label: {
                                     text: item.name,
                                     font: '12pt monospace',
@@ -128,7 +155,7 @@ export default {
                               outline : true,
                               outlineColor : Cesium.Color.BLUE
                         },
-                        description: '描述：黑色边的粉色盒子'
+                        description: '描述：蓝色边的粉色盒子'
                   });
                   // 通过czml添加黑色边框的红色盒子
                   // let czml = [ 
@@ -202,20 +229,22 @@ export default {
                   this.satelliteData.forEach(val=> {  // 卫星
                         this.addSatellite(val)
                   });
+                  this.data.forEach(val => {
+                        this.addScanSatellite(val);
+                  })
                   // 添加扩散水波纹
                   //构造动的扩散涟漪  实际上就是把图片圆形按时间改变半径
                   this.waterWave.forEach(val => {
                         this.addCircleRipple({
                               json:val,
-                              deviationR: 5500,//差值 差值也大 速度越快
-                              eachInterval:1700,//两个圈的时间间隔
+                              deviationR: 20000,//差值 差值也大 速度越快
+                              eachInterval:1900,//两个圈的时间间隔
                               // imageUrl:"assets/home/redCircle2.png",
                               //imageUrl: '../../assets/images/logo.png',
                               maxR:(val.value)*20
                         });
                         
-                  })
-
+                  });
             }, // initView ending
             addSatellite(val){ // 球上添加卫星
                   // var start = Cesium.JulianDate.fromDate(new Date(2019, 10, 20, 16, 0, 0));  // 起始时间
@@ -239,7 +268,7 @@ export default {
                         })]),
                         description: `${val.name} 正在绕地球旋转ing`,
                         position : this.computeCirclularFlight(val.list[0].lon, val.list[0].lat, val.list[0].alt, start),
-                        billboard : { image : val.image , },  //图标
+                        billboard : { image : val.image , },  //图标(旋转的卫星图标)
                         // 基于位置移动计算方向
                         orientation : new Cesium.VelocityOrientationProperty(this.position),
                         path: { // 卫星轨迹
@@ -270,6 +299,114 @@ export default {
                               material: Cesium.Color.AQUA.withAlpha(0.3)
                         }
                   })
+            },
+            addScanSatellite(data) { // 圆锥形扫描
+                  let viewer = this.viewer;
+                  // 起始时间
+                  var start = Cesium.JulianDate.fromDate(new Date());
+                  // 结束时间
+                  var stop = Cesium.JulianDate.addSeconds(start, 360, new Cesium.JulianDate());
+      
+                  // 设置始时钟始时间
+                  viewer.clock.startTime = start.clone();
+                  // 设置时钟当前时间
+                  viewer.clock.currentTime = start.clone();
+                  // 设置始终停止时间
+                  viewer.clock.stopTime = stop.clone();
+                  // 时间速率，数字越大时间过的越快
+                  viewer.clock.multiplier = 2;
+                  // 时间轴
+                  viewer.timeline.zoomTo(start, stop);
+                  // 循环执行
+                  viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+      
+      
+                  var property = computeFlight(data);
+                  // 添加模型
+                  var planeModel = viewer.entities.add({
+                        name:'J888',
+                        description: 'J888正在监测ing'+`(${data.list[0].lon},${data.list[0].lat},${data.list[0].alt},${start})`,
+                  	// 和时间轴关联
+                  	availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
+                  		start: start,
+                  		stop: stop
+                  	})]),
+                        // position: property,
+                        position: this.computeCirclularFlight(data.list[0].lon, data.list[0].lat, data.list[0].alt, start),
+                  	// 根据所提供的速度计算点
+                  	orientation: new Cesium.VelocityOrientationProperty(this.computeCirclularFlight(data.list[0].lon, data.list[0].lat, data.list[0].alt, start)),
+                        billboard: { image: data.image },
+                        // 模型数据
+                  	model: {
+                  		// uri: '../../static/satellite/H1A.png',
+                  		minimumPixelSize: 128
+                  	},
+                  	path: {
+                  		resolution: 1,
+                  		material: new Cesium.PolylineGlowMaterialProperty({
+                  			glowPower: .1,
+                  			color: Cesium.Color.GRAY
+                  		}),
+                  		width: 5
+                  	}
+                  });
+                  planeModel.position.setInterpolationOptions({ //设定位置的插值算法
+                  	interpolationDegree: 5,
+                  	interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+                  });
+                  console.log('this.computeCirclularFlight(data.list[0].lon, data.list[0].lat, data.list[0].alt, start) :', this.computeCirclularFlight(data.list[0].lon, data.list[0].lat, data.list[0].alt, start));
+                  var property2 = computeFlight2(data);
+                  console.log('data.list[0].alt :', data.list[0].alt/2);
+                  var entity_ty = viewer.entities.add({
+                        name:'扫描',
+                        description: '扫描范围'+`(${data.list[0].lon},${data.list[0].lat}, ${data.list[0].alt}, ${start})`,
+                  	availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
+                  		start: start,
+                  		stop: stop
+                  	})]),
+                        // position: property2,
+                        position: this.computeCirclularFlight(data.list[0].lon, data.list[0].lat, data.list[0].alt, start),
+                  	orientation: new Cesium.VelocityOrientationProperty(this.computeCirclularFlight(data.list[0].lon, data.list[0].lat, data.list[0].alt, start)),
+                  	cylinder: {
+                  		HeightReference: Cesium.HeightReference.RELATIVE_TO_GROUND, // 相对于地形的位置
+                  		length: 3000000,
+                  		topRadius: 0,
+                  		bottomRadius: 700000, // 圆锥低的宽度
+                  		material: Cesium.Color.RED.withAlpha(.4),
+                  		outline: !0,
+                  		numberOfVerticalLines: 0,
+                  		outlineColor: Cesium.Color.RED.withAlpha(0.09)
+                  	},
+                  });
+                  entity_ty.position.setInterpolationOptions({
+                  	interpolationDegree: 5,
+                  	interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+                  });
+      
+      
+                  
+                  function computeFlight(source) {
+                        console.log('source :', source);
+                  	var property = new Cesium.SampledPositionProperty();
+                  	for (var i = 0; i < source.length; i++) {
+                  		var time = Cesium.JulianDate.addSeconds(start, source[i].time, new Cesium.JulianDate);
+                  		var position = Cesium.Cartesian3.fromDegrees(source[i].longitude, source[i].dimension, source[i].height);
+                  		// 添加位置，和时间对应
+                  		property.addSample(time, position);
+                  	}
+                  	return property;
+                  }
+      
+                  function computeFlight2(source) {
+                  	var property = new Cesium.SampledPositionProperty();
+                  	for (var i = 0; i < source.length; i++) {
+                  		var time = Cesium.JulianDate.addSeconds(start, source[i].time, new Cesium.JulianDate);
+                  		var position = Cesium.Cartesian3.fromDegrees(source[i].longitude, source[i].dimension, source[i].height / 2);
+                  		// 添加位置，和时间对应
+                  		property.addSample(time, position);
+                  	}
+                  	return property;
+                  }
             },
             computeCirclularFlight(lon, lat, alt, start) { // 计算轨迹
                   let property = new Cesium.SampledPositionProperty(); 
@@ -412,20 +549,32 @@ export default {
                         });
                   },data.eachInterval)
                   this.viewer.entities.add({
-                              name: `name: ${data.json.name}`,
-                              description: `${data.json.name}-(${data.json.identify}) 相关信息`,
-                              position:Cesium.Cartesian3.fromDegrees(data.json.coordinates[0],data.json.coordinates[1],0),
-                              show:true,
-                              ellipse:{
-                                    semiMinorAxis :(data.json.value)*5,
-                                    semiMajorAxis :(data.json.value)*5,
-                                    height:10,
-                                    // material:new Cesium.Color(1,0,0,1)
-                                    material: Cesium.Color[data.json.COLOR].withAlpha(0.8)
-                              }
-                        });
-                  },
+                        name: `name: ${data.json.name}`,
+                        description: `${data.json.name}-(${data.json.identify}) 相关信息`,
+                        position:Cesium.Cartesian3.fromDegrees(data.json.coordinates[0],data.json.coordinates[1],0),
+                        show:true,
+                        ellipse:{
+                              semiMinorAxis :(data.json.value)*5,
+                              semiMajorAxis :(data.json.value)*5,
+                              height:10,
+                              // material:new Cesium.Color(1,0,0,1)
+                              material: Cesium.Color[data.json.COLOR].withAlpha(0.8)
+                        }
+                  });
+            },
 // ******************添加水波纹 ending **************************
+            setCamera(){ // 
+                  
+                  this.viewer.camera.setView({
+                        destination : Cesium.Cartesian3.fromDegrees(0,0,20000000), // 设置位置
+                        orientation: {
+                              heading : Cesium.Math.toRadians(0), // 方向
+                              pitch : Cesium.Math.toRadians(-90.0),// 倾斜角度
+                              roll : Cesium.Math.toRadians(0)
+                        }
+                  });
+                  // console.log('this.viewer.camera.setView :', this.viewer.camera.setView);
+            },
             backTo(p){ if(p === -1) this.$router.go(-1) }
       },
 }
